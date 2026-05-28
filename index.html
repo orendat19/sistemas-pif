@@ -6,6 +6,7 @@
     <title>Sistema de Control de Acceso</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
+        /* ==================== ESTILOS GENERALES DEL SISTEMA ==================== */
         :root {
             --primary: #6366f1;
             --primary-hover: #4f46e5;
@@ -69,7 +70,7 @@
             width: 100%;
         }
 
-        /* Glassmorphism Panel */
+        /* ==================== EFECTO GLASSMORPHISM PARA PANELES ==================== */
         .panel {
             background: var(--panel-bg);
             backdrop-filter: blur(12px);
@@ -106,7 +107,7 @@
             padding-bottom: 0.25rem;
         }
 
-        /* Lab View */
+        /* ==================== AREA VISUAL DEL LABORATORIO ==================== */
         .lab-view {
             grid-column: 2 / 3;
             grid-row: 1 / 2;
@@ -251,7 +252,7 @@
             100% { box-shadow: 0 8px 16px rgba(0,0,0,0.4); }
         }
 
-        /* Controls */
+        /* ==================== CONTROLES PRINCIPALES ==================== */
         .controls-grid {
             display: flex;
             flex-direction: column;
@@ -317,7 +318,7 @@
             opacity: 0.7;
         }
 
-        /* Stats */
+        /* ==================== ESTADISTICAS EN TIEMPO REAL ==================== */
         .stats-grid {
             display: flex;
             flex-direction: column;
@@ -425,7 +426,7 @@
         .counter-box.entradas .num { color: var(--success); }
         .counter-box.salidas .num { color: var(--info); }
 
-        /* Logic Gates & Logs */
+        /* ==================== COMPUERTAS LOGICAS Y REGISTRO ==================== */
         .bottom-section {
             grid-column: 2 / 3;
             grid-row: 2 / 3;
@@ -635,7 +636,7 @@
         .log-action-full { color: #ef4444; font-weight: bold; animation: pulse 1s infinite; }
         .log-action-reset { color: #f59e0b; font-weight: bold; }
 
-        /* Animations */
+        /* ==================== ANIMACIONES DEL SISTEMA ==================== */
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -668,7 +669,7 @@
             100% { background-position: 20px 0; }
         }
 
-        /* Scrollbar */
+        /* ==================== PERSONALIZACION DE SCROLL ==================== */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 4px; }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
@@ -680,7 +681,7 @@
             .bottom-section { grid-column: 1 / -1; grid-row: auto; }
         }
 
-        /* Identification Modal */
+        /* ==================== MODAL DE IDENTIFICACION ==================== */
         .modal {
             position: fixed;
             inset: 0;
@@ -1000,7 +1001,7 @@
 
     <div class="container">
 
-        <!-- LEFT COLUMN: Controls & Stats -->
+        <!-- ==================== COLUMNA IZQUIERDA: CONTROLES Y ESTADISTICAS ==================== -->
         <div>
             <!-- Control Panel -->
             <div class="panel">
@@ -1063,7 +1064,7 @@
             </div>
         </div>
 
-        <!-- CENTER COLUMN: Lab View & Gates -->
+        <!-- ==================== COLUMNA CENTRAL: LABORATORIO Y COMPUERTAS ==================== -->
         <div style="display: flex; flex-direction: column; gap: 0.75rem;">
             <!-- Lab View -->
             <div class="panel lab-view" id="labView">
@@ -1192,7 +1193,7 @@
             </div>
         </div>
 
-        <!-- RIGHT COLUMN: Event Log -->
+        <!-- ==================== COLUMNA DERECHA: REGISTRO DE EVENTOS ==================== -->
         <div class="panel" style="display: flex; flex-direction: column;">
             <div class="panel-title">📝 Registro de Eventos</div>
             <div class="event-log" id="eventLog">
@@ -1213,7 +1214,7 @@
     </div>
 
 
-    <!-- Identification Modal -->
+    <!-- ==================== MODAL DE INGRESO DE ESTUDIANTES ==================== -->
     <div id="identModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="identTitle">
         <div class="modal-box">
             <div class="modal-header">
@@ -1251,7 +1252,7 @@
         </div>
     </div>
 
-    <!-- Exit Modal -->
+    <!-- ==================== MODAL DE SALIDA DE ESTUDIANTES ==================== -->
     <div id="exitModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="exitTitle">
         <div class="modal-box">
             <div class="modal-header">
@@ -1272,8 +1273,9 @@
         </div>
     </div>
 
+    <!-- ==================== LOGICA PRINCIPAL DEL SISTEMA ==================== -->
     <script>
-        // State Management
+        // ==================== VARIABLES DE ESTADO DEL SISTEMA ====================
         let currentStudents = 0;
         let maxCapacity = 20;
         let totalEntradas = 0;
@@ -1282,7 +1284,7 @@
         // Rich Array of Emojis for diversity
         const studentEmojis = ['👨‍🎓', '👩‍🎓', '👨‍💻', '👩‍💻', '🧑‍🎓', '🧑‍💻', '🕵️‍♂️', '🕵️‍♀️', '🦸‍♂️', '🦸‍♀️', '🥷', '🧑‍🔬'];
 
-        // DOM Elements
+        // ==================== REFERENCIAS A ELEMENTOS DEL DOM ====================
         const maxCapacityInput = document.getElementById('maxCapacity');
         const btnEnter = document.getElementById('btnEnter');
         const btnExit = document.getElementById('btnExit');
@@ -1301,7 +1303,7 @@
         
         const eventLog = document.getElementById('eventLog');
 
-        // Logic Gates Elements
+        // ==================== ELEMENTOS VISUALES DE COMPUERTAS ====================
         const gateCapacity = document.getElementById('gateCapacity');
         const gateEntry = document.getElementById('gateEntry');
         const gateActivity = document.getElementById('gateActivity');
@@ -1310,7 +1312,7 @@
         const gateIntermediate = document.getElementById('gateIntermediate');
         const gateExtreme = document.getElementById('gateExtreme');
 
-        // Identification modal elements and logic (modal replaces prompt)
+        // ==================== LOGICA DEL MODAL DE IDENTIFICACION ====================
         let pendingEntryCallback = null;
         let selectedStudentIdForExit = null;
         const identModal = document.getElementById('identModal');
@@ -1321,6 +1323,7 @@
         const modalCancel = document.getElementById('modalCancel');
         const exitModalCancel = document.getElementById('exitModalCancel');
 
+        // Muestra el modal para registrar el ingreso de un estudiante
         function showIdentifyModal(callback) {
             if (!identModal) {
                 // Fallback to prompt if modal not available
@@ -1336,12 +1339,14 @@
             setTimeout(() => studentNameInput.focus(), 80);
         }
 
+        // Cierra el modal de identificación
         function closeIdentifyModal() {
             if (identModal) identModal.classList.remove('active');
             pendingEntryCallback = null;
             btnEnter.disabled = currentStudents >= maxCapacity;
         }
 
+        // Confirma el ingreso del estudiante
         function onModalConfirm() {
             let name = (studentNameInput && studentNameInput.value) ? studentNameInput.value.trim() : '';
             if (!name) name = `Anon-${Math.floor(Math.random()*9000)+1000}`;
@@ -1364,6 +1369,7 @@
         }
 
         // Exit modal functions
+        // Abre el modal para seleccionar la salida de un estudiante
         function showExitModal() {
             if (!exitModal) {
                 removeStudentLogic(false);
@@ -1381,6 +1387,7 @@
             btnExit.disabled = currentStudents <= 0;
         }
 
+        // Genera dinámicamente la lista de estudiantes activos
         function populateStudentsList() {
             if (!studentsList) return;
             studentsList.innerHTML = '';
@@ -1435,6 +1442,7 @@
             studentsList.appendChild(confirmBtn);
         }
 
+        // Elimina un estudiante específico del laboratorio
         function removeStudentById(studentId) {
             const studentEl = document.getElementById(studentId);
             if (!studentEl) return;
@@ -1459,6 +1467,7 @@
         if (exitModalCancel) exitModalCancel.addEventListener('click', closeExitModal);
 
         // Helper to add a student from modal
+        // Agrega un estudiante nuevo al laboratorio
         function addStudentByName(name) {
             if (currentStudents >= maxCapacity) {
                 logEvent('Intento de ingreso bloqueado: laboratorio lleno', 'full');
@@ -1522,11 +1531,11 @@
             }
         }
 
-        // Initialization
+        // ==================== INICIALIZACION DEL SISTEMA ====================
         updateUI();
         logEvent('Sistema inicializado y listo', 'reset');
 
-        // Event Listeners
+        // ==================== EVENTOS Y ACCIONES DE LOS BOTONES ====================
         maxCapacityInput.addEventListener('change', (e) => {
             let val = parseInt(e.target.value);
             if (val < 1 || isNaN(val)) { val = 1; e.target.value = 1; }
@@ -1582,6 +1591,7 @@
             setTimeout(updateUI, allStudents.length * 50 + 100);
         });
 
+        // Maneja la salida automática o manual de estudiantes
         function removeStudentLogic(isSystemEviction = false) {
             // Find the last visible student
             const students = studentsContainer.querySelectorAll('.student:not(.leaving)');
@@ -1609,6 +1619,7 @@
             updateUI();
         }
 
+        // Actualiza todos los elementos visuales de la interfaz
         function updateUI() {
             // Update Number Statistics
             countEntradas.textContent = totalEntradas;
@@ -1659,6 +1670,7 @@
             updateStaticGates();
         }
 
+        // Actualiza el estado visual de las compuertas lógicas
         function updateStaticGates() {
             // Gate: Capacity Limit (NOT) -> Output 1 if there is space (NOT Full), 0 if full
             toggleGateLed(gateCapacity, currentStudents < maxCapacity);
@@ -1670,6 +1682,7 @@
             toggleGateLed(gateAlert, currentStudents === maxCapacity);
         }
 
+        // Enciende o apaga visualmente una compuerta lógica
         function toggleGateLed(gateElement, isOn) {
             if (!gateElement) return;
             // Prefer the explicit output dot, fallback to any gate-dot
@@ -1680,6 +1693,7 @@
             led.classList.toggle('on', !!isOn);
         }
 
+        // Activa animaciones temporales en las compuertas
         function triggerGateAnimation(type) {
             // Always flash Activity OR gate on any action
             flashGate(gateActivity);
@@ -1687,6 +1701,7 @@
             if (type === 'entry') flashGate(gateEntry);
         }
 
+        // Hace parpadear una compuerta lógica
         function flashGate(gateElement) {
             toggleGateLed(gateElement, true);
             setTimeout(() => {
@@ -1696,6 +1711,7 @@
             }, 400);
         }
 
+        // Registra eventos importantes en el historial del sistema
         function logEvent(message, type) {
             const now = new Date();
             const timeStr = now.toLocaleTimeString('es-ES', { hour12: false });
